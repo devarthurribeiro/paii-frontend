@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <img src="/public/statics/logo.png" style="width: 46px" />
+        <img src="/statics/logo.png" style="width: 46px" />
         <!-- <q-toolbar-title> Quasar App </q-toolbar-title> -->
         <!-- <q-toolbar-title> Quasar App </q-toolbar-title> -->
         <q-btn stretch flat label="Início" to="/" />

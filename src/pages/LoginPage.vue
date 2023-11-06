@@ -2,7 +2,7 @@
   <q-layout>
     <q-header elevated>
       <q-toolbar>
-        <img src="/public/statics/logo.png" style="width: 46px" />
+        <img src="/statics/logo.png" style="width: 46px" />
         <div class="text-h5">GESTÃO DE DADOS ELÉTRICOS</div>
       </q-toolbar>
     </q-header>
