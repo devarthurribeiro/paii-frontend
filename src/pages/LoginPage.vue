@@ -23,9 +23,17 @@
                   </template>
                 </q-input>
                 <br />
+                <q-badge
+                  v-if="error"
+                  color="negative"
+                  icon="report_problem"
+                  border="left"
+                  >Login ou senha inválido.</q-badge
+                >
                 <br />
                 <q-btn
                   @click="login"
+                  :loading="loading"
                   type="submit"
                   icon="check_circle"
                   color="primary"
@@ -66,15 +74,25 @@ const user = ref({
   showForm: false,
 });
 
+const error = ref(false);
+const loading = ref(false);
+
 async function login() {
+  loading.value = true;
+  error.value = false;
   try {
     const { data } = await api.post('/login', {
       login: user.value.login,
       password: user.value.password,
     });
+
     store.login(data);
     router.push('/');
-  } catch (e) {}
+  } catch (e) {
+  } finally {
+    loading.value = false;
+    error.value = true;
+  }
 }
 </script>
 
