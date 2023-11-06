@@ -12,5 +12,9 @@ export interface Residencia {
   endereco: string;
   cargaInstalada: number;
   padraoEntrada: string;
-  quadroDistribuicao: string;
+  tipoDisjuntor: string;
+  voltagemPadrao: number;
+  tipoEletroduto: string;
+  possuiDR: string;
+  possuiDPS: string;
 }

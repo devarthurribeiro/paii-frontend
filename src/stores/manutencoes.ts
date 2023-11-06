@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 import { api } from '../boot/axios';
 
-export const useManutencao = defineStore('residencia', {
+export const useManutencao = defineStore('manutencao', {
   state: () => ({
     current: {
       id: null,
-      endereco: '',
-      cargaInstalada: '',
-      padraoEntrada: '',
-      quadroDistribuicao: '',
+      dataFinalizacao: '',
+      descricao: '',
+      eletricistaResponsavel: '',
+      status: '',
     },
     manutencoes: [],
   }),
@@ -22,7 +22,10 @@ export const useManutencao = defineStore('residencia', {
       return this.current.id ? this.update() : this.create();
     },
     async create() {
-      await api.post('/manutencoes', this.current);
+      await api.post('/manutencoes', {
+        ...this.current,
+        dataCadastro: new Date().toISOString().split('T')[0],
+      });
       this.reset();
       this.list();
     },
@@ -38,10 +41,10 @@ export const useManutencao = defineStore('residencia', {
     async reset() {
       this.current = {
         id: null,
-        endereco: '',
-        cargaInstalada: '',
-        padraoEntrada: '',
-        quadroDistribuicao: '',
+        dataFinalizacao: '',
+        descricao: '',
+        eletricistaResponsavel: '',
+        status: '',
       };
     },
   },

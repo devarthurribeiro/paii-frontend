@@ -6,7 +6,7 @@
           key="id"
           title="Lista de Manutenções"
           :columns="columns"
-          :rows="store.residencias"
+          :rows="store.manutencoes"
           v-model:selected="selected"
           selection="single"
           flat
@@ -45,27 +45,25 @@
       <q-card-section>
         <div class="text-h6">Residência</div>
         <q-form @submit.prevent="saveResidencia">
+          <q-input
+            v-model="store.current.descricao"
+            label="Descrição"
+          ></q-input>
+          <q-input
+            v-model="store.current.eletricistaResponsavel"
+            label="Eletricista Responsável"
+          ></q-input>
           <div class="row">
-            <q-input v-model="cep" label="CEP" @blur="fetchCep" class="col-4" />
             <q-input
-              v-model="store.current.endereco"
-              label="Endereço"
-              class="col-8"
+              v-model="store.current.status"
+              label="Status"
+              class="col-6"
             ></q-input>
             <q-input
-              v-model="store.current.cargaInstalada"
-              label="Carga Instalada"
-              class="col-12"
-            />
-            <q-input
-              v-model="store.current.padraoEntrada"
-              label="Padrão de Entrada"
-              class="col-12"
-            />
-            <q-input
-              v-model="store.current.quadroDistribuicao"
-              label="Quadro de Destribuição"
-              class="col-12"
+              v-model="store.current.dataFinalizacao"
+              type="date"
+              label="Data finalização"
+              class="col-6"
             />
           </div>
           <div class="flex justify-end q-mt-sm q-gutter-sm">
@@ -86,7 +84,6 @@ import { onMounted, ref } from 'vue';
 
 import { api } from '../boot/axios';
 import { Residencia } from 'src/components/models';
-import { useResidencia } from 'src/stores/residencias';
 import { useManutencao } from '../stores/manutencoes';
 
 const cep = ref('');
@@ -111,12 +108,6 @@ const columns: QTable['columns'] = [
     sortable: true,
   },
   {
-    name: 'dataFinalizacao',
-    field: 'dataFinalizacao',
-    label: 'Data Finalização',
-    align: 'left',
-  },
-  {
     name: 'descricao',
     field: 'descricao',
     label: 'Descrição',
@@ -126,7 +117,12 @@ const columns: QTable['columns'] = [
     field: 'eletricistaResponsavel',
     label: 'Eletricista Responsável',
   },
-  //status
+  {
+    name: 'dataFinalizacao',
+    field: 'dataFinalizacao',
+    label: 'Data Finalização',
+    align: 'left',
+  },
   {
     name: 'status',
     field: 'status',
@@ -147,12 +143,8 @@ async function saveResidencia() {
 
 async function remove() {
   if (!selected.value[0].id) return;
-  store.delete(selected.value[0].id);
-}
-
-async function fetchCep() {
-  const { data } = await api.get(`https://viacep.com.br/ws/${cep.value}/json/`);
-  store.current.endereco = `${data.logradouro}`;
+  await store.delete(selected.value[0].id);
+  selected.value = [];
 }
 
 function editRow(row: any) {
