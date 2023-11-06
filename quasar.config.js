@@ -65,7 +65,7 @@ module.exports = configure(function (ctx) {
       env: {
         API_URL: ctx.dev
           ? 'http://localhost:8080'
-          : 'https://paii-backend.onrender.com',
+          : 'https://paii-backend.azurewebsites.net',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
