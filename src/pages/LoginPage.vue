@@ -45,9 +45,7 @@
                 <div class="flex flex-center">
                   <p>
                     Não tem uma conta?
-                    <q-btn flat @click="user.showForm = true"
-                      >Cadastre-se.</q-btn
-                    >
+                    <q-btn @click="show = true" flat>Cadastre-se.</q-btn>
                   </p>
                 </div>
               </form>
@@ -57,6 +55,23 @@
       </q-page>
     </q-page-container>
   </q-layout>
+  <q-dialog v-model="show">
+    <q-card style="width: 350px">
+      <q-card-section>
+        <div class="text-h5">Criar conta</div>
+        <q-form @submit="createAccount">
+          <q-input v-model="newUser.username" label="Nome" />
+          <q-input v-model="newUser.login" label="Usuário" />
+          <q-input v-model="newUser.password" label="Senha" />
+          <q-input v-model="newUser.email" label="E-mail" />
+          <br />
+          <div class="flex justify-end">
+            <q-btn type="submit" color="green">Cadastre-se</q-btn>
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -64,9 +79,11 @@ import { ref } from 'vue';
 import { api } from 'src/boot/axios';
 import { useUserStore } from '../stores/user';
 import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
 const store = useUserStore();
 const router = useRouter();
+const $q = useQuasar();
 
 const user = ref({
   login: '',
@@ -74,6 +91,15 @@ const user = ref({
   showForm: false,
 });
 
+const newUser = ref({
+  username: '',
+  login: '',
+  password: '',
+  email: '',
+  tipo: '',
+});
+
+const show = ref(false);
 const error = ref(false);
 const loading = ref(false);
 
@@ -92,6 +118,26 @@ async function login() {
   } finally {
     loading.value = false;
     error.value = true;
+  }
+}
+
+async function createAccount() {
+  try {
+    const { data } = await api.post('/usuarios', newUser.value);
+    show.value = false;
+    newUser.value = {};
+    $q.notify({
+      message: 'Usuário criado com sucesso!',
+      color: 'positive',
+      icon: 'check_circle',
+    });
+  } catch (e) {
+    $q.notify({
+      message: 'Erro ao criar usuário.',
+      color: 'negative',
+      icon: 'report_problem',
+    });
+  } finally {
   }
 }
 </script>
