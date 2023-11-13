@@ -115,9 +115,9 @@ async function login() {
     store.login(data);
     router.push('/');
   } catch (e) {
+    error.value = true;
   } finally {
     loading.value = false;
-    error.value = true;
   }
 }
 
