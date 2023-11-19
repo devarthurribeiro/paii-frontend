@@ -87,19 +87,14 @@ import { onMounted, ref } from 'vue';
 import { api } from '../boot/axios';
 import { Residencia } from 'src/components/models';
 import { useResidencia } from 'src/stores/residencias';
+import { useRoute } from 'vue-router';
 
 const cep = ref('');
 const selected = ref([] as Residencia[]);
 const showForm = ref(false);
 
 const store = useResidencia();
-
-const formData = ref({
-  endereco: '',
-  cargaInstalada: '',
-  padraoEntrada: '',
-  quadroDistribuicao: '',
-});
+const route = useRoute();
 
 const columns: QTable['columns'] = [
   {
@@ -155,5 +150,6 @@ function editRow(row: any) {
 
 onMounted(() => {
   store.list();
+  if (route.params.cadastrar) showForm.value = true;
 });
 </script>

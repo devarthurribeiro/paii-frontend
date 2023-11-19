@@ -3,7 +3,9 @@
     <div class="col-6">
       <div class="flex q-gutter-md">
         <div class="text-h4 text-bold">SUAS RESIDÊNCIAS</div>
-        <q-btn rounded color="green">Nova RESIDÊNCIAS</q-btn>
+        <q-btn to="/residencias/cadastrar" rounded color="green"
+          >Nova RESIDÊNCIAS</q-btn
+        >
       </div>
       <q-list class="q-mt-md" style="max-width: 700px">
         <q-item bordered>
@@ -47,7 +49,9 @@
     <div class="col-6">
       <div class="flex q-gutter-md">
         <div class="text-h4 text-bold">MANUTENÇÕES</div>
-        <q-btn rounded color="green">Nova MANUTENÇÕES</q-btn>
+        <q-btn to="/manutencoes/cadastrar" rounded color="green"
+          >Nova MANUTENÇÕES</q-btn
+        >
       </div>
       <div class="row q-mt-md q-gutter-md">
         <div class="col-6">

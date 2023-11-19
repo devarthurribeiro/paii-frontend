@@ -17,11 +17,11 @@ const routes: RouteRecordRaw[] = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       {
         component: () => import('pages/ResidenciasPage.vue'),
-        path: 'residencias',
+        path: 'residencias/:cadastrar?',
       },
       {
         component: () => import('pages/ManutecoesPage.vue'),
-        path: 'manutencoes',
+        path: 'manutencoes/:cadastrar?',
       },
       {
         component: () => import('pages/SobrePage.vue'),

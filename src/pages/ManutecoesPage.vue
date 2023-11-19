@@ -85,12 +85,14 @@ import { onMounted, ref } from 'vue';
 import { api } from '../boot/axios';
 import { Residencia } from 'src/components/models';
 import { useManutencao } from '../stores/manutencoes';
+import { useRoute } from 'vue-router';
 
 const cep = ref('');
 const selected = ref([] as Residencia[]);
 const showForm = ref(false);
 
 const store = useManutencao();
+const route = useRoute();
 
 const formData = ref({
   endereco: '',
@@ -154,5 +156,8 @@ function editRow(row: any) {
 
 onMounted(() => {
   store.list();
+  if (route.params.cadastrar) {
+    showForm.value = true;
+  }
 });
 </script>
