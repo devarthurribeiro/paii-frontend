@@ -8,38 +8,26 @@
         >
       </div>
       <q-list class="q-mt-md" style="max-width: 700px">
-        <q-item bordered>
+        <q-item
+          v-for="residencia in store.residencias"
+          :key="residencia.id"
+          bordered
+        >
           <q-item-section top>
-            <q-item-label class="text-h6">Residência 1</q-item-label>
-          </q-item-section>
-          <q-item-section top side>
-            <div>
-              <q-btn to="/residencias" dense icon="visibility" flat></q-btn>
-              <q-btn to="/residencias" dense icon="edit" flat></q-btn>
-              <q-btn to="/residencias" dense icon="delete" flat></q-btn>
-            </div>
-          </q-item-section>
-        </q-item>
-        <q-item bordered>
-          <q-item-section top>
-            <q-item-label class="text-h6">Residência 2</q-item-label>
+            <q-item-label class="text-h6">{{
+              residencia.endereco
+            }}</q-item-label>
           </q-item-section>
           <q-item-section top side>
             <div>
               <q-btn dense icon="visibility" flat></q-btn>
-              <q-btn dense icon="edit" flat></q-btn>
-              <q-btn dense icon="delete" flat></q-btn>
-            </div>
-          </q-item-section>
-        </q-item>
-        <q-item bordered>
-          <q-item-section top>
-            <q-item-label class="text-h6">Residência 3</q-item-label>
-          </q-item-section>
-          <q-item-section top side>
-            <div>
-              <q-btn dense icon="visibility" flat></q-btn>
-              <q-btn dense icon="edit" flat></q-btn>
+              <q-btn
+                @click="store.current = residencia"
+                to="/residencias/cadastrar"
+                dense
+                icon="edit"
+                flat
+              ></q-btn>
               <q-btn dense icon="delete" flat></q-btn>
             </div>
           </q-item-section>
@@ -77,4 +65,10 @@
   </q-page>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useResidencia } from '../stores/residencias';
+
+const store = useResidencia();
+
+store.list();
+</script>

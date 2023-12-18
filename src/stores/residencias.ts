@@ -1,21 +1,20 @@
 import { defineStore } from 'pinia';
 import { api } from '../boot/axios';
+import { Residencia } from '../components/models';
 
 export const useResidencia = defineStore('residencia', {
   state: () => ({
-    current: {
-      id: null,
-      endereco: '',
-      cargaInstalada: '',
-      padraoEntrada: '',
-      voltagemPadrao: 220,
-      tipoEletroduto: '',
-      possuiDR: '',
-      possuiDPS: '',
-    },
-    residencias: [],
+    current: {} as Partial<Residencia>,
+    residencias: [] as Residencia[],
   }),
-  getters: {},
+  getters: {
+    selectOptions: (state) => {
+      return state.residencias.map((residencia) => ({
+        label: residencia.endereco,
+        value: residencia.id,
+      }));
+    },
+  },
   actions: {
     async list() {
       const { data } = await api.get('/residencias');
@@ -39,16 +38,7 @@ export const useResidencia = defineStore('residencia', {
       this.list();
     },
     async reset() {
-      this.current = {
-        id: null,
-        endereco: '',
-        cargaInstalada: '',
-        padraoEntrada: '',
-        voltagemPadrao: 220,
-        tipoEletroduto: '',
-        possuiDR: '',
-        possuiDPS: '',
-      };
+      this.current = {};
     },
   },
 });

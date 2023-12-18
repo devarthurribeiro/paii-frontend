@@ -8,6 +8,9 @@ export const useManutencao = defineStore('manutencao', {
       dataFinalizacao: '',
       descricao: '',
       eletricistaResponsavel: '',
+      residencia: {
+        id: null,
+      },
       status: '',
     },
     manutencoes: [],

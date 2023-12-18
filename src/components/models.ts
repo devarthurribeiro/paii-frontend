@@ -15,6 +15,6 @@ export interface Residencia {
   tipoDisjuntor: string;
   voltagemPadrao: number;
   tipoEletroduto: string;
-  possuiDR: string;
-  possuiDPS: string;
+  possuiDR: boolean;
+  possuiDPS: boolean;
 }

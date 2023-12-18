@@ -45,6 +45,13 @@
       <q-card-section>
         <div class="text-h6">Residência</div>
         <q-form @submit.prevent="saveResidencia">
+          <q-select
+            v-model="store.current.residencia.id"
+            :options="residenciaStore.selectOptions"
+            emit-value
+            map-options
+            label="Residência"
+          ></q-select>
           <q-input
             v-model="store.current.descricao"
             label="Descrição"
@@ -86,12 +93,14 @@ import { api } from '../boot/axios';
 import { Residencia } from 'src/components/models';
 import { useManutencao } from '../stores/manutencoes';
 import { useRoute } from 'vue-router';
+import { useResidencia } from '../stores/residencias';
 
 const cep = ref('');
 const selected = ref([] as Residencia[]);
 const showForm = ref(false);
 
 const store = useManutencao();
+const residenciaStore = useResidencia();
 const route = useRoute();
 
 const formData = ref({
@@ -108,6 +117,12 @@ const columns: QTable['columns'] = [
     label: 'Data Cadastro',
     align: 'left',
     sortable: true,
+  },
+  {
+    name: 'residencia',
+    field: (row) => (row.residencia ? row.residencia.endereco : ''),
+    label: 'Residência',
+    align: 'left',
   },
   {
     name: 'descricao',
@@ -156,6 +171,7 @@ function editRow(row: any) {
 
 onMounted(() => {
   store.list();
+  residenciaStore.list();
   if (route.params.cadastrar) {
     showForm.value = true;
   }

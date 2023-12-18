@@ -34,6 +34,10 @@ const routes: RouteRecordRaw[] = [
     path: '/login',
     component: () => import('pages/LoginPage.vue'),
   },
+  {
+    path: '/qrcode',
+    component: () => import('pages/QrCodeViewPage.vue'),
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
