@@ -13,9 +13,16 @@ export const useManutencao = defineStore('manutencao', {
       },
       status: '',
     },
-    manutencoes: [],
+    manutencoes: [] as any[],
   }),
-  getters: {},
+  getters: {
+    getFinalizadas: (state) => {
+      return state.manutencoes.filter((m) => m.status === 'FINALIZADO');
+    },
+    getEmAndamento: (state) => {
+      return state.manutencoes.filter((m) => m.status === 'PENDENTE');
+    },
+  },
   actions: {
     async list() {
       const { data } = await api.get('/manutencoes');
@@ -47,6 +54,9 @@ export const useManutencao = defineStore('manutencao', {
         dataFinalizacao: '',
         descricao: '',
         eletricistaResponsavel: '',
+        residencia: {
+          id: null,
+        },
         status: '',
       };
     },

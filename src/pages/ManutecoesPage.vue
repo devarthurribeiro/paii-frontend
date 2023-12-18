@@ -33,7 +33,13 @@
             :disable="selected.length == 0"
             >Remover</q-btn
           >
-          <q-btn @click="showForm = true" color="primary" outline
+          <q-btn
+            @click="
+              store.reset();
+              showForm = true;
+            "
+            color="primary"
+            outline
             >Adicionar</q-btn
           >
         </div>
@@ -41,7 +47,7 @@
     </q-card>
   </q-page>
   <q-dialog v-model="showForm">
-    <q-card>
+    <q-card style="width: 400px">
       <q-card-section>
         <div class="text-h6">Residência</div>
         <q-form @submit.prevent="saveResidencia">
@@ -61,11 +67,12 @@
             label="Eletricista Responsável"
           ></q-input>
           <div class="row">
-            <q-input
+            <q-select
               v-model="store.current.status"
+              :options="['PENDENTE', 'FINALIZADO']"
               label="Status"
               class="col-6"
-            ></q-input>
+            ></q-select>
             <q-input
               v-model="store.current.dataFinalizacao"
               type="date"
@@ -94,6 +101,7 @@ import { Residencia } from 'src/components/models';
 import { useManutencao } from '../stores/manutencoes';
 import { useRoute } from 'vue-router';
 import { useResidencia } from '../stores/residencias';
+import { formatDate, formatDateTime } from '../utils';
 
 const cep = ref('');
 const selected = ref([] as Residencia[]);
@@ -117,6 +125,7 @@ const columns: QTable['columns'] = [
     label: 'Data Cadastro',
     align: 'left',
     sortable: true,
+    format: (val) => formatDateTime(val),
   },
   {
     name: 'residencia',
@@ -138,6 +147,7 @@ const columns: QTable['columns'] = [
     name: 'dataFinalizacao',
     field: 'dataFinalizacao',
     label: 'Data Finalização',
+    format: (val) => formatDate(val),
     align: 'left',
   },
   {
@@ -166,7 +176,10 @@ async function remove() {
 
 function editRow(row: any) {
   showForm.value = true;
-  store.current = row;
+  store.current = {
+    ...row,
+    dataFinalizacao: row.dataFinalizacao.split('T')[0],
+  };
 }
 
 onMounted(() => {

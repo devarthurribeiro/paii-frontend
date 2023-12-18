@@ -44,19 +44,29 @@
       <div class="row q-mt-md q-gutter-md">
         <div class="col-6">
           <div class="text-h6">Em Aberto</div>
-          <q-btn rounded size="lg" color="green" class="q-ma-sm">
-            Residência1 <br />
-            20/09/2023
+          <q-btn
+            v-for="m in manutencoeStore.getEmAndamento"
+            :key="m.id"
+            rounded
+            size="lg"
+            color="green"
+            class="q-ma-sm"
+          >
+            {{ m.residencia.endereco }} <br />
+            20/10/2023
           </q-btn>
         </div>
         <div class="col-6">
           <div class="text-h6">Finalizadas</div>
-          <q-btn rounded size="lg" color="red" class="q-ma-sm">
-            Residência2 <br />
-            20/10/2023
-          </q-btn>
-          <q-btn rounded size="lg" color="red" class="q-ma-sm">
-            Residência3 <br />
+          <q-btn
+            v-for="m in manutencoeStore.getFinalizadas"
+            :key="m.id"
+            rounded
+            size="lg"
+            color="red"
+            class="q-ma-sm"
+          >
+            {{ m.residencia.endereco }} <br />
             20/10/2023
           </q-btn>
         </div>
@@ -66,9 +76,11 @@
 </template>
 
 <script setup lang="ts">
+import { useManutencao } from '../stores/manutencoes';
 import { useResidencia } from '../stores/residencias';
 
 const store = useResidencia();
-
+const manutencoeStore = useManutencao();
 store.list();
+manutencoeStore.list();
 </script>
